@@ -1,0 +1,54 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Проверка страницы — совпадение найдено",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "url": "https://example.com",
+        "keyword": "Example",
+        "useRegex": false,
+        "caseSensitive": false,
+        "wholeWord": false
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "found": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Проверка regex паттерна",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "url": "https://example.com",
+        "keyword": "Example\\s+Domain",
+        "useRegex": true,
+        "caseSensitive": false,
+        "wholeWord": false
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "found": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Пустые параметры — ошибка",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "url": "",
+        "keyword": ""
+      },
+      "expectedStatus": 400
+    }
+  ]
+}
